@@ -1,0 +1,51 @@
+targets:
+  $default:
+    sources:
+      - $package$
+      - lib/**
+      - pubspec.yaml
+      - test/**
+    builders:
+      injectable_generator:injectable_builder:
+        options:
+          auto_register: false
+          class_name_pattern: "Service$|Repository$|Bloc$"
+          file_name_pattern: "_service$|_repository$|_bloc$"
+      json_serializable:
+        enabled: true
+        generate_for:
+          include:
+            - lib/src/**
+        options:
+          any_map: false
+          checked: false
+          create_factory: true
+          create_to_json: true
+          disallow_unrecognized_keys: false
+          explicit_to_json: true
+          field_rename: none
+          ignore_unannotated: false
+          include_if_null: true
+          #nullable: true
+      freezed:
+        enabled: true
+        options:
+          union_key: type
+          union_value_case: snake
+        generate_for:
+          include:
+            - lib/src/**
+      build_web_compilers:entrypoint:
+        generate_for:
+          - test/**.browser_test.dart
+          - web/**.dart
+        enabled: true
+        options:
+          sound_null_safety: true
+          compiler: dart2js
+          dart2js_args:
+            - -DIS_WEB=true
+            - -O2
+      pubspec_generator:
+        options:
+          output: lib/src/common/constant/pubspec.yaml.g.dart

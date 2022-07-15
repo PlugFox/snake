@@ -1,0 +1,17 @@
+icons_launcher:
+  # image_path: 'assets/icon/1x/icon.png'
+  image_path_android: "assets/icon/1x/icon.png"
+  image_path_ios: "assets/icon/1x/icon.png"
+  image_path_macos: "assets/icon/1x/icon.png"
+  image_path_windows: "assets/icon/1x/icon.png"
+  image_path_linux: "assets/icon/1x/icon.png"
+  image_path_web: "assets/icon/1x/icon.png"
+  #image_adaptive_background: 'assets/ic_background.png'
+  #image_adaptive_foreground: 'assets/ic_foreground.png'
+  #image_adaptive_round: 'assets/ic_logo_round.png'
+  ios: true
+  android: true
+  macos: true
+  windows: true
+  linux: true
+  web: true

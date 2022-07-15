@@ -1,0 +1,87 @@
+name: snake
+description: Snake project
+
+publish_to: "none"
+
+version: 0.0.1+1
+
+environment:
+  sdk: ">=2.18.0-44.1.beta <3.0.0"
+  flutter: ">=3.1.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Firebase
+  #firebase: any
+  #firebase_core: any
+  #firebase_analytics: any
+  #firebase_auth: any
+  #firebase_crashlytics: any
+  #firebase_messaging: any
+  #firebase_remote_config: any
+  #cloud_firestore: any
+  #flutterfire_ui: any
+
+  # Routing
+  go_router: any
+
+  # Inversion of control
+  get_it: any
+  injectable: any
+
+  # Models and annotation
+  meta: any
+  equatable: any
+  json_annotation: any
+  freezed_annotation: any
+
+  # Database
+  shared_preferences: any
+
+  # Utility
+  l: any
+  intl: any
+  url_launcher: any
+  theme_tailor_annotation: any
+  platform_info: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  build_runner: any
+  build_web_compilers: any
+  dart_code_metrics: any
+  icons_launcher: ^2.0.0-beta.2
+  flutter_native_splash: any
+  pubspec_generator: any
+  theme_tailor: any
+  json_serializable: any
+  freezed: any
+  flutter_gen_runner: any
+  injectable_generator: any
+
+dependency_overrides:
+  analyzer: ">=4.2.0 <5.0.0"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+
+flutter_intl:
+  enabled: true
+  class_name: GeneratedLocalization
+  main_locale: en
+  arb_dir: lib/src/common/localization
+  output_dir: lib/src/common/localization/generated
+  use_deferred_loading: false
+
+flutter_gen:
+  output: lib/src/common/constant/
+  line_length: 120
