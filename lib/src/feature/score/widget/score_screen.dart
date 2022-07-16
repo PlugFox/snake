@@ -12,6 +12,8 @@ class ScoreScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Score'),
         ),
-        body: const Placeholder(),
+        body: const SafeArea(
+          child: Placeholder(),
+        ),
       );
 } // ScoreScreen

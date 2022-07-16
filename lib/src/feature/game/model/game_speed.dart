@@ -31,6 +31,12 @@ enum GameSpeed with Comparable<GameSpeed> {
   /// Value of the enum
   final String value;
 
+  Duration get duration => map<Duration>(
+        slow: () => const Duration(milliseconds: 500),
+        medium: () => const Duration(milliseconds: 250),
+        fast: () => const Duration(milliseconds: 150),
+      );
+
   /// Pattern matching
   T map<T>({
     required T Function() slow,
