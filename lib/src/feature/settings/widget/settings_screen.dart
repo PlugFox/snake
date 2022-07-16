@@ -12,6 +12,8 @@ class SettingsScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Settings'),
         ),
-        body: const Placeholder(),
+        body: const SafeArea(
+          child: Placeholder(),
+        ),
       );
 } // SettingsScreen

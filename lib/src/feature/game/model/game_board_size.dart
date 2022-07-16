@@ -8,8 +8,8 @@ enum GameBoardSize with Comparable<GameBoardSize> {
   /// medium
   medium('medium'),
 
-  /// hardcore
-  hardcore('hardcore');
+  /// large
+  large('large');
 
   /// {@macro game_board_size}
   const GameBoardSize(this.value);
@@ -21,8 +21,8 @@ enum GameBoardSize with Comparable<GameBoardSize> {
         return small;
       case 'medium':
         return medium;
-      case 'hardcore':
-        return hardcore;
+      case 'large':
+        return large;
       default:
         return fallback ?? (throw ArgumentError.value(value));
     }
@@ -31,19 +31,25 @@ enum GameBoardSize with Comparable<GameBoardSize> {
   /// Value of the enum
   final String value;
 
+  int get dimension => map<int>(
+        small: () => 12,
+        medium: () => 24,
+        large: () => 48,
+      );
+
   /// Pattern matching
   T map<T>({
     required T Function() small,
     required T Function() medium,
-    required T Function() hardcore,
+    required T Function() large,
   }) {
     switch (this) {
       case GameBoardSize.small:
         return small();
       case GameBoardSize.medium:
         return medium();
-      case GameBoardSize.hardcore:
-        return hardcore();
+      case GameBoardSize.large:
+        return large();
     }
   }
 
@@ -52,25 +58,25 @@ enum GameBoardSize with Comparable<GameBoardSize> {
     required T Function() orElse,
     T Function()? small,
     T Function()? medium,
-    T Function()? hardcore,
+    T Function()? large,
   }) =>
       map<T>(
         small: small ?? orElse,
         medium: medium ?? orElse,
-        hardcore: hardcore ?? orElse,
+        large: large ?? orElse,
       );
 
   /// Pattern matching
   T? maybeMapOrNull<T>({
     T Function()? small,
     T Function()? medium,
-    T Function()? hardcore,
+    T Function()? large,
   }) =>
       maybeMap<T?>(
         orElse: () => null,
         small: small,
         medium: medium,
-        hardcore: hardcore,
+        large: large,
       );
 
   @override
