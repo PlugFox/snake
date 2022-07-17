@@ -25,13 +25,18 @@ mixin _FoodControllerMixin on _SnakeControllerMixin {
 
   void _spawnFood(int boardDimension) {
     if (_food != null) return;
-    Coordinate? newFood;
-    var attempts = 1000;
-    do {
-      if (attempts < 0) return;
-      newFood = Coordinate(_random.nextInt(boardDimension), _random.nextInt(boardDimension));
-      attempts--;
-    } while (_snake.contains(newFood));
-    _food = newFood;
+    final available = <Coordinate>[];
+    for (var i = 0; i < boardDimension; i++) {
+      for (var j = 0; j < boardDimension; j++) {
+        final coordinate = Coordinate(i, j);
+        if (!_snake.contains(coordinate)) continue;
+        available.add(coordinate);
+      }
+    }
+    if (available.isEmpty) return;
+    final head = _snake.first;
+    final hardToReach = available.where((e) => e.dx != head.dx && e.dy != head.dy).toList(growable: false);
+    final list = hardToReach.isEmpty ? available : hardToReach;
+    _food = list[_random.nextInt(list.length)];
   }
 }
