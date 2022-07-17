@@ -1,38 +1,87 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
+import '../model/coordinate.dart';
+import '../model/game_board_size.dart';
 import '../model/game_speed.dart';
 import '../model/game_status.dart';
+import '../model/snake.dart';
+import '../model/snake_direction.dart';
 
-class GameController
-    with ChangeNotifier, _GameStatusMixin, _SnakeControllerMixin, _FoodControllerMixin, _GameLoopMixin
-    implements ValueListenable<GameStatus> {
-  GameController({
+part 'food_controller_mixin.dart';
+part 'game_loop_mixin.dart';
+part 'game_status_mixin.dart';
+part 'snake_controller_mixin.dart';
+
+abstract class IGameListenable implements Listenable {
+  GameSpeed get speed;
+  GameBoardSize get boardSize;
+  GameStatus get status;
+  Snake get snake;
+  Coordinate? get food;
+}
+
+abstract class GameController implements IGameListenable {
+  void start();
+  bool setDirection(SnakeDirection direction);
+  void pause();
+  void resume();
+  void restart({GameSpeed? speed, GameBoardSize? boardSize});
+  void stop();
+  void dispose();
+}
+
+class GameControllerImpl extends GameController
+    with ChangeNotifier, _GameStatusMixin, _SnakeControllerMixin, _FoodControllerMixin, _GameLoopMixin {
+  GameControllerImpl({
     required GameSpeed speed,
-  }) : _speed = speed;
+    required GameBoardSize boardSize,
+  })  : _speed = speed,
+        _boardSize = boardSize;
 
   @override
-  GameStatus get value => _$status;
+  GameStatus get status => _$status;
+
+  @override
+  GameSpeed get speed => _speed;
   GameSpeed _speed;
 
+  @override
+  GameBoardSize get boardSize => _boardSize;
+  GameBoardSize _boardSize;
+
+  @override
+  Snake get snake => _snake;
+
+  @override
+  Coordinate? get food => _food;
+
+  @override
   void start() {
-    if (value.isStarted) return;
-    _startGameLoop(_speed.duration);
+    if (status.isStarted) return;
+    _startGameLoop(_speed.duration, _boardSize.dimension);
   }
 
+  @override
   void pause() => throw UnimplementedError();
 
+  @override
   void resume() => throw UnimplementedError();
 
-  void restart({GameSpeed? speed}) {
+  @override
+  void restart({GameSpeed? speed, GameBoardSize? boardSize}) {
     stop();
     _speed = speed ?? _speed;
+    _boardSize = boardSize ?? _boardSize;
     start();
   }
 
+  @override
   void stop() {
-    if (!value.isStarted) return;
+    if (!status.isStarted) return;
     _stopGameLoop();
   }
 
@@ -40,49 +89,5 @@ class GameController
   void dispose() {
     stop();
     super.dispose();
-  }
-}
-
-mixin _GameStatusMixin on ChangeNotifier {
-  void _setStatus(GameStatus newStatus) {
-    if (newStatus == _$status) return;
-    _$status = newStatus;
-    notifyListeners();
-  }
-
-  GameStatus _$status = GameStatus.stopped;
-}
-
-mixin _SnakeControllerMixin {
-  void _updateSnakePosition() {}
-  bool _gameOver() => false;
-}
-
-mixin _FoodControllerMixin on _SnakeControllerMixin {
-  bool _foodIntersection() => false;
-  void _feedSnake() {}
-}
-
-mixin _GameLoopMixin on _GameStatusMixin, _SnakeControllerMixin, _FoodControllerMixin {
-  Timer? _ticker;
-
-  void _startGameLoop(Duration duration) {
-    _ticker = Timer.periodic(duration, (ticker) {
-      _updateSnakePosition();
-      while (_foodIntersection()) {
-        _feedSnake();
-      }
-      if (_gameOver()) {
-        _setStatus(GameStatus.gameOver);
-        ticker.cancel();
-      }
-    });
-    _setStatus(GameStatus.started);
-  }
-
-  void _stopGameLoop() {
-    _ticker?.cancel();
-    _ticker = null;
-    _setStatus(GameStatus.stopped);
   }
 }

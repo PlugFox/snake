@@ -1,14 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../common/router/app_router.dart';
+import '../controller/game_controller.dart';
 import '../model/game_board_size.dart';
 import '../model/game_speed.dart';
+import '../model/game_status.dart';
 import 'game_board.dart';
 
 /// {@template game_screen}
 /// GameScreen widget
 /// {@endtemplate}
-class GameScreen extends StatelessWidget {
+class GameScreen extends StatefulWidget {
   /// {@macro game_screen}
   const GameScreen({
     required this.size,
@@ -19,17 +23,57 @@ class GameScreen extends StatelessWidget {
   final GameBoardSize size;
   final GameSpeed speed;
 
+  /// The Game Controller from the closest instance of the GameScreen
+  /// that encloses the given context, if any.
+  static GameController? maybeOf(BuildContext context) =>
+      context.findAncestorStateOfType<_GameScreenState>()?._gameController;
+
+  @override
+  State<GameScreen> createState() => _GameScreenState();
+} // GameScreen
+
+class _GameScreenState extends State<GameScreen> {
+  late final GameController _gameController;
+
+  @override
+  void initState() {
+    super.initState();
+    _gameController = GameControllerImpl(
+      boardSize: widget.size,
+      speed: widget.speed,
+    );
+    scheduleMicrotask(_gameController.start);
+    _gameController.addListener(_onGameChanged);
+  }
+
+  @override
+  void didUpdateWidget(covariant GameScreen oldWidget) {
+    if (oldWidget.size != widget.size || oldWidget.speed != widget.speed) {
+      _gameController.restart(speed: widget.speed, boardSize: widget.size);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _onGameChanged() {
+    if (_gameController.status == GameStatus.gameOver) {
+      _gameController.restart();
+    }
+  }
+
+  @override
+  void dispose() {
+    _gameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Game'),
-        ),
         body: SafeArea(
           child: OrientationBuilder(
             builder: (context, orientation) => Flex(
               direction: orientation == Orientation.portrait ? Axis.vertical : Axis.horizontal,
               children: <Widget>[
-                Expanded(child: GameBoard(size: size)),
+                const Expanded(child: GameBoard()),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(48),
@@ -51,4 +95,4 @@ class GameScreen extends StatelessWidget {
           ),
         ),
       );
-} // GameScreen
+} // _GameScreenState

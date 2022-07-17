@@ -48,6 +48,7 @@ dependencies:
   url_launcher: any
   theme_tailor_annotation: any
   platform_info: any
+  flutter_batteries: ^0.0.6-dev
 
 dev_dependencies:
   flutter_test:

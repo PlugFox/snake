@@ -15,7 +15,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp.router(
         title: 'Snake',
         restorationScopeId: 'app',
-        theme: ThemeData.light(),
+        theme: ThemeData.dark(),
         routeInformationParser: AppRouter.instance().routeInformationParser,
         routerDelegate: AppRouter.instance().routerDelegate,
         routeInformationProvider: AppRouter.instance().routeInformationProvider,

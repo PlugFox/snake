@@ -37,10 +37,6 @@ class MenuScreen extends StatelessWidget {
                 title: const Text('License'),
                 onTap: () => showLicensePage(context: context),
               ),
-              ListTile(
-                title: const Text('License'),
-                onTap: () => showLicensePage(context: context),
-              ),
             ],
           ),
         ),
