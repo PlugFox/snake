@@ -4,19 +4,27 @@
         {
             "name": "debug",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+        },
+        {
+            "name": "debug (auto aim)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define=auto-aim=true",
+            ],
         },
         {
             "name": "profile",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
         },
         {
             "name": "release",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
         }
     ]
 }

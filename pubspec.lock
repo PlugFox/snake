@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  batteries:
+    dependency: transitive
+    description:
+      name: batteries
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4-dev"
   bazel_worker:
     dependency: transitive
     description:
@@ -265,6 +272,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_batteries:
+    dependency: "direct main"
+    description:
+      name: flutter_batteries
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6-dev"
   flutter_driver:
     dependency: transitive
     description: flutter
