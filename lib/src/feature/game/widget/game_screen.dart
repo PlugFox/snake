@@ -44,6 +44,8 @@ class _GameScreenState extends State<GameScreen> {
     );
     scheduleMicrotask(_gameController.start);
     _gameController.addListener(_onGameChanged);
+    // TODO: save and restore progress
+    // Matiunin Mikhail <plugfox@gmail.com>, 17 July 2022
   }
 
   @override
@@ -56,6 +58,8 @@ class _GameScreenState extends State<GameScreen> {
 
   void _onGameChanged() {
     if (_gameController.status == GameStatus.gameOver) {
+      // TODO: Try again with score
+      // Matiunin Mikhail <plugfox@gmail.com>, 17 July 2022
       _gameController.restart();
     }
   }
@@ -65,6 +69,9 @@ class _GameScreenState extends State<GameScreen> {
     _gameController.dispose();
     super.dispose();
   }
+
+  // TODO: Additional information
+  // Matiunin Mikhail <plugfox@gmail.com>, 17 July 2022
 
   @override
   Widget build(BuildContext context) => Scaffold(

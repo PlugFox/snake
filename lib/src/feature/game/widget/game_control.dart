@@ -7,6 +7,12 @@ import '../controller/game_controller.dart';
 import '../model/snake_direction.dart';
 import 'game_screen.dart';
 
+// TODO: new control models
+// + Keyboard
+// + Gyroscope
+// + Swypes
+// Matiunin Mikhail <plugfox@gmail.com>, 17 July 2022
+
 /// {@template game_control}
 /// GameControl widget
 /// {@endtemplate}
@@ -60,12 +66,6 @@ mixin _PointerMixin on State<GameControl>, _GameControllerMixin {
   bool swipeControl = false;
   bool pointerControl = true;
 
-  /* Controll with four triangles */
-  bool Function(Offset point) _isTop = (_) => false;
-  bool Function(Offset point) _isRight = (_) => false;
-  bool Function(Offset point) _isBottom = (_) => false;
-  bool Function(Offset point) _isLeft = (_) => false;
-
   void _onHover(PointerEvent event) {
     if (petalControl) {
       final position = event.localPosition;
@@ -92,6 +92,12 @@ mixin _PointerMixin on State<GameControl>, _GameControllerMixin {
       }
     }
   }
+
+  /* Controll with four triangles */
+  bool Function(Offset point) _isTop = (_) => false;
+  bool Function(Offset point) _isRight = (_) => false;
+  bool Function(Offset point) _isBottom = (_) => false;
+  bool Function(Offset point) _isLeft = (_) => false;
 
   bool _isInTriangle(Offset vertex1, Offset vertex2, Offset vertex3, Offset point) =>
       {

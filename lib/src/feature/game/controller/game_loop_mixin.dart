@@ -3,6 +3,9 @@ part of 'game_controller.dart';
 mixin _GameLoopMixin on _GameStatusMixin, _SnakeControllerMixin, _FoodControllerMixin {
   Timer? _ticker;
 
+  // TODO: sounds
+  // Matiunin Mikhail <plugfox@gmail.com>, 17 July 2022
+
   void _startGameLoop(Duration duration, int boardDimension) {
     _createSnake(boardDimension);
     _spawnFood(boardDimension);
